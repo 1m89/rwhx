@@ -1,0 +1,443 @@
+<!DOCTYPE html><html lang="zh-CN"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"><title>人物画像</title><style>:root{--mist-blue:#8B9DAF;--deep-mist:#6B7D8F;--soft-mist:#AAB8C5;--light-mist:#D4DCE3;--cream:#FAF8F5;--warm-cream:#F5F2ED;--chocolate-dark:#4A3F35;--chocolate-mid:#6D5D4F;--chocolate-light:#8D7D6F}*{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent}body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","PingFang SC","Hiragino Sans GB","Microsoft YaHei",sans-serif;background:linear-gradient(135deg,var(--warm-cream) 0%,var(--cream) 100%);color:var(--chocolate-dark);font-size:13px;line-height:1.5;min-height:100vh;padding:0}.header{background:rgba(250,248,245,0.95);backdrop-filter:blur(12px);padding:12px 16px;position:sticky;top:0;z-index:100;box-shadow:0 1px 0 rgba(107,125,143,0.08)}.header-top{display:flex;justify-content:space-between;align-items:center;margin-bottom:10px}.header h1{font-size:17px;font-weight:500;color:var(--deep-mist);margin:0}.menu-btn{width:32px;height:32px;border-radius:8px;background:white;border:1.5px solid var(--light-mist);color:var(--chocolate-mid);font-size:18px;display:flex;align-items:center;justify-content:center;cursor:pointer}.menu-btn:active{background:var(--warm-cream)}.search-bar{position:relative;margin-bottom:10px}.search-input{width:100%;padding:8px 12px 8px 36px;border:1.5px solid var(--light-mist);border-radius:10px;font-size:13px;background:white;color:var(--chocolate-dark)}.search-input:focus{outline:none;border-color:var(--mist-blue)}.filter-tags{display:flex;gap:6px;overflow-x:auto;padding-bottom:2px}.filter-tags::-webkit-scrollbar{display:none}.filter-tag{padding:4px 11px;background:white;border:1.5px solid var(--light-mist);border-radius:16px;font-size:12px;color:var(--chocolate-mid);white-space:nowrap;cursor:pointer}.filter-tag.active{background:linear-gradient(135deg,var(--soft-mist),var(--mist-blue));color:white;border-color:transparent}.container{padding:16px 16px 80px 16px}.character-grid{display:flex;flex-direction:column;gap:12px}.character-card{background:var(--cream);border-radius:14px;padding:14px;cursor:pointer;box-shadow:0 2px 6px rgba(107,125,143,0.1),0 4px 12px rgba(107,125,143,0.08);border:1.5px solid transparent}.character-card:active{transform:scale(0.98)}.card-header h3{font-size:15px;font-weight:500;color:var(--deep-mist);margin-bottom:6px}.card-meta{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:8px}.meta-tag{padding:2px 7px;background:rgba(139,157,175,0.1);border-radius:10px;font-size:11px;color:var(--chocolate-mid)}.card-preview{color:var(--chocolate-mid);font-size:12px;line-height:1.6;margin-bottom:8px;display:-webkit-box;-webkit-line-clamp:2;line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}.card-preview.empty{opacity:0.4;font-style:italic}.card-footer{display:flex;justify-content:space-between;align-items:center;padding-top:8px;border-top:1px solid rgba(139,157,175,0.08)}.card-time{font-size:12px;color:var(--chocolate-light);opacity:0.6}.card-progress{display:flex;gap:3px}.progress-dot{width:5px;height:5px;border-radius:50%;background:var(--light-mist)}.progress-dot.filled{background:linear-gradient(135deg,var(--soft-mist),var(--mist-blue))}.empty-state{text-align:center;padding:60px 20px;color:var(--chocolate-mid);opacity:0.5;font-size:14px}.fab{position:fixed;right:16px;bottom:16px;width:52px;height:52px;border-radius:50%;background:linear-gradient(135deg,var(--mist-blue),var(--deep-mist));color:white;border:none;font-size:28px;cursor:pointer;box-shadow:0 4px 12px rgba(107,125,143,0.3);z-index:200;display:flex;align-items:center;justify-content:center;font-weight:300}.fab:active{transform:scale(0.92)}.preview-modal{display:none;position:fixed;top:0;left:0;right:0;bottom:0;background:rgba(74,63,53,0.5);backdrop-filter:blur(6px);z-index:1000;padding:40px 20px 20px 20px}.preview-modal.active{display:flex;align-items:center;justify-content:center}.preview-card{background:var(--cream);border-radius:16px;width:100%;max-width:500px;max-height:80vh;overflow-y:auto;box-shadow:0 12px 40px rgba(0,0,0,0.3);animation:slideUp 0.3s ease}.preview-header{padding:16px;border-bottom:1px solid rgba(139,157,175,0.1);display:flex;justify-content:space-between;align-items:center;position:sticky;top:0;background:var(--cream);z-index:10}.preview-title{font-size:18px;font-weight:500;color:var(--deep-mist)}.preview-actions{display:flex;gap:8px}.icon-btn{width:32px;height:32px;border-radius:8px;background:white;border:1.5px solid var(--light-mist);color:var(--chocolate-mid);font-size:16px;display:flex;align-items:center;justify-content:center;cursor:pointer}.icon-btn:active{background:var(--warm-cream)}.preview-body{padding:16px}.preview-section{margin-bottom:20px}.preview-section-title{font-size:13px;font-weight:500;color:var(--mist-blue);margin-bottom:8px}.preview-section-content{font-size:14px;line-height:1.7;color:var(--chocolate-dark);white-space:pre-wrap}.preview-section-content.empty{color:var(--chocolate-mid);opacity:0.3;font-style:italic}.basic-info-grid{display:grid;gap:10px;background:white;padding:12px;border-radius:10px}.info-item{display:flex;font-size:14px}.info-label{color:var(--mist-blue);font-weight:500;min-width:70px}.info-value{color:var(--chocolate-dark);flex:1}.info-value.empty{color:var(--chocolate-mid);opacity:0.3}.edit-modal{display:none;position:fixed;top:0;left:0;right:0;bottom:0;background:var(--cream);z-index:2000;overflow-y:auto}.edit-modal.active{display:block;animation:slideInUp 0.3s ease}.edit-header{background:rgba(250,248,245,0.95);backdrop-filter:blur(12px);padding:12px 16px;position:sticky;top:0;z-index:10;display:flex;align-items:center;gap:12px;box-shadow:0 1px 0 rgba(107,125,143,0.08)}.back-btn{font-size:20px;color:var(--chocolate-mid);cursor:pointer;padding:4px}.edit-title{flex:1;font-size:16px;font-weight:500;color:var(--deep-mist)}.save-btn{font-size:14px;color:var(--mist-blue);font-weight:500;cursor:pointer;padding:4px 8px}.edit-body{padding:16px}.form-group{margin-bottom:18px}.form-label{display:block;font-size:13px;font-weight:500;color:var(--chocolate-mid);margin-bottom:6px}.form-input,.form-textarea{width:100%;padding:10px 12px;border:1.5px solid var(--light-mist);border-radius:10px;font-size:14px;background:white;color:var(--chocolate-dark);font-family:inherit}.form-input:focus,.form-textarea:focus{outline:none;border-color:var(--mist-blue)}.form-textarea{height:100px;resize:none;overflow-y:auto}.recent-tags{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:8px}.recent-tag{padding:5px 10px;padding-right:6px;background:white;border:1.5px solid var(--light-mist);border-radius:14px;font-size:13px;color:var(--chocolate-mid);display:flex;align-items:center;gap:6px;cursor:pointer}.recent-tag.active{background:linear-gradient(135deg,var(--soft-mist),var(--mist-blue));color:white;border-color:transparent}.tag-remove{font-size:16px;opacity:0.6;cursor:pointer}.btn-delete{width:100%;padding:12px;background:linear-gradient(135deg,#C97575,#B86565);color:white;border:none;border-radius:10px;font-size:14px;font-weight:500;cursor:pointer;margin-top:20px}.btn-delete:active{opacity:0.9}.confirm-dialog{display:none;position:fixed;top:0;left:0;right:0;bottom:0;background:rgba(74,63,53,0.6);backdrop-filter:blur(8px);z-index:3000;padding:20px}.confirm-dialog.active{display:flex;align-items:center;justify-content:center}.confirm-box{background:var(--cream);border-radius:16px;padding:24px;max-width:320px;width:100%;box-shadow:0 12px 40px rgba(0,0,0,0.3);animation:scaleIn 0.2s ease}.confirm-message{font-size:15px;color:var(--chocolate-dark);margin-bottom:20px;text-align:center;line-height:1.6}.confirm-actions{display:flex;gap:10px}.confirm-btn{flex:1;padding:10px;border-radius:10px;font-size:14px;font-weight:500;cursor:pointer;border:none}.confirm-btn.cancel{background:white;color:var(--chocolate-mid);border:1.5px solid var(--light-mist)}.confirm-btn.confirm{background:linear-gradient(135deg,#C97575,#B86565);color:white}.toast{position:fixed;bottom:80px;left:50%;transform:translateX(-50%) translateY(100px);background:var(--deep-mist);color:white;padding:10px 20px;border-radius:20px;box-shadow:0 6px 20px rgba(0,0,0,0.3);font-size:13px;opacity:0;z-index:4000}.toast.show{opacity:1;transform:translateX(-50%) translateY(0);transition:all 0.3s ease}.menu-dropdown{display:none;position:fixed;top:50px;right:16px;background:var(--cream);border-radius:12px;padding:8px;box-shadow:0 8px 24px rgba(0,0,0,0.2);z-index:500;min-width:100px}.menu-dropdown.active{display:block;animation:scaleIn 0.2s ease}.menu-item{padding:10px 12px;border-radius:8px;font-size:13px;color:var(--chocolate-dark);cursor:pointer;display:flex;align-items:center;gap:8px}.menu-item:active{background:var(--warm-cream)}.large-editor{display:none;position:fixed;top:0;left:0;right:0;bottom:0;background:var(--cream);z-index:3000}.large-editor.active{display:flex;flex-direction:column}.large-editor-header{background:rgba(250,248,245,0.95);backdrop-filter:blur(12px);padding:12px 16px;display:flex;align-items:center;gap:12px;box-shadow:0 1px 0 rgba(107,125,143,0.08)}.large-editor-title{flex:1;font-size:15px;font-weight:500;color:var(--deep-mist)}.large-editor-body{flex:1;padding:16px}.large-textarea{width:100%;height:100%;border:1.5px solid var(--light-mist);border-radius:12px;padding:12px;font-size:14px;line-height:1.7;background:white;color:var(--chocolate-dark);font-family:inherit;resize:none}.large-textarea:focus{outline:none;border-color:var(--mist-blue)}.photo-section{margin-bottom:18px;display:flex;flex-direction:column;align-items:center}.photo-preview{width:80px;height:80px;border-radius:50%;background:var(--warm-cream);display:flex;align-items:center;justify-content:center;cursor:pointer;border:2px dashed var(--light-mist);overflow:hidden;position:relative}.photo-preview img{width:100%;height:100%;object-fit:cover}.photo-preview.empty{font-size:32px;opacity:0.3}.photo-preview.has-photo{border:3px solid white;box-shadow:0 2px 8px rgba(0,0,0,0.15)}.photo-remove{position:absolute;top:-4px;right:-4px;width:24px;height:24px;border-radius:50%;background:#C97575;color:white;border:2px solid white;font-size:14px;display:flex;align-items:center;justify-content:center;cursor:pointer;box-shadow:0 2px 6px rgba(0,0,0,0.2)}.photo-remove:active{transform:scale(0.9)}.card-photo{width:36px;height:36px;border-radius:50%;object-fit:cover;margin-right:10px;border:2px solid white;box-shadow:0 2px 6px rgba(0,0,0,0.1)}.textarea-wrapper{position:relative;width:100%}.expand-icon{position:absolute;right:8px;bottom:8px;width:20px;height:20px;background:rgba(255,255,255,0.9);border:1px solid var(--light-mist);border-radius:6px;color:var(--chocolate-mid);font-size:14px;display:flex;align-items:center;justify-content:center;cursor:pointer;opacity:0.6;transition:all 0.2s ease}.expand-icon:hover{opacity:1;background:white}.expand-icon:active{transform:scale(0.9)}@keyframes slideUp{from{transform:translateY(20px);opacity:0}to{transform:translateY(0);opacity:1}}@keyframes slideInUp{from{transform:translateY(100%)}to{transform:translateY(0)}}@keyframes scaleIn{from{transform:scale(0.9);opacity:0}to{transform:scale(1);opacity:1}}::-webkit-scrollbar{width:6px}::-webkit-scrollbar-track{background:transparent}::-webkit-scrollbar-thumb{background:var(--light-mist);border-radius:3px}</style></head><body><div class="header"><div class="header-top"><h1>人物画像</h1><button class="menu-btn" id="menuBtn">⋯</button></div><div class="search-bar"><input type="text" class="search-input" id="searchInput"></div><div class="filter-tags" id="filterTags"></div></div><div class="menu-dropdown" id="menuDropdown"><div class="menu-item" id="exportBtn">导出数据</div><div class="menu-item" id="importBtn">导入数据</div></div><input type="file" id="importFile" accept=".json" style="display:none"><div class="container"><div class="character-grid" id="characterGrid"></div></div><button class="fab" id="fabBtn">+</button><div class="preview-modal" id="previewModal"><div class="preview-card" id="previewCard"><div class="preview-header"><div class="preview-title" id="previewTitle"></div><div class="preview-actions"><button class="icon-btn" id="editBtn">✎</button><button class="icon-btn" id="deleteBtn">🗑</button></div></div><div class="preview-body" id="previewBody"></div></div></div><div class="edit-modal" id="editModal"><div class="edit-header"><span class="back-btn" id="backBtn">←</span><div class="edit-title" id="editTitle"></div><span class="save-btn" id="saveBtn">保存</span></div><div class="edit-body" id="editBody"></div></div><div class="confirm-dialog" id="confirmDialog"><div class="confirm-box"><div class="confirm-message" id="confirmMessage"></div><div class="confirm-actions"><button class="confirm-btn cancel" id="confirmCancel">取消</button><button class="confirm-btn confirm" id="confirmOk">确定</button></div></div></div><div class="toast" id="toast"></div><div class="large-editor" id="largeEditor"><div class="large-editor-header"><span class="back-btn" id="largeEditorBack">←</span><div class="large-editor-title" id="largeEditorTitle"></div><span class="save-btn" id="largeEditorSave">保存</span></div><div class="large-editor-body"><textarea class="large-textarea" id="largeTextarea"></textarea></div></div><script>
+        let characters = JSON.parse(localStorage.getItem('characters')) || [];
+        let recentTags = JSON.parse(localStorage.getItem('recentTags')) || [];
+        let currentFilter = 'all';
+        let searchQuery = '';
+        let currentCharacterId = null;
+        let confirmCallback = null;
+        let largeEditorField = null;
+        let largeEditorCallback = null;
+        
+        init();
+        
+        function init() {
+            renderFilterTags();
+            renderGrid();
+            
+            document.getElementById('fabBtn').addEventListener('click', openAddModal);
+            document.getElementById('searchInput').addEventListener('input', e => {
+                searchQuery = e.target.value.toLowerCase();
+                renderGrid();
+            });
+            document.getElementById('backBtn').addEventListener('click', closeEdit);
+            document.getElementById('saveBtn').addEventListener('click', saveEdit);
+            document.getElementById('editBtn').addEventListener('click', () => {
+                const id = currentCharacterId;
+                closePreview();
+                openEditModal(id);
+            });
+            document.getElementById('deleteBtn').addEventListener('click', () => {
+                confirmDelete(currentCharacterId, true);
+            });
+            document.getElementById('previewModal').addEventListener('click', e => {
+                if (e.target.id === 'previewModal') closePreview();
+            });
+            document.getElementById('confirmCancel').addEventListener('click', closeConfirm);
+            document.getElementById('confirmOk').addEventListener('click', () => {
+                if (confirmCallback) confirmCallback();
+                closeConfirm();
+            });
+            
+            // Menu
+            document.getElementById('menuBtn').addEventListener('click', toggleMenu);
+            document.addEventListener('click', e => {
+                if (!e.target.closest('#menuBtn') && !e.target.closest('#menuDropdown')) {
+                    closeMenu();
+                }
+            });
+            document.getElementById('exportBtn').addEventListener('click', exportData);
+            document.getElementById('importBtn').addEventListener('click', () => {
+                document.getElementById('importFile').click();
+            });
+            document.getElementById('importFile').addEventListener('change', importData);
+            
+            // Large Editor
+            document.getElementById('largeEditorBack').addEventListener('click', closeLargeEditor);
+            document.getElementById('largeEditorSave').addEventListener('click', saveLargeEditor);
+        }
+        
+        function renderStats() {
+            const total = characters.length;
+            if (total === 0) {
+                document.getElementById('statsBar').textContent = '';
+                return;
+            }
+            
+            const types = {};
+            let totalProgress = 0;
+            
+            characters.forEach(c => {
+                types[c.relationship] = (types[c.relationship] || 0) + 1;
+                const progress = [c.personality, c.events, c.values, c.exchange, c.strategy, c.notes].filter(Boolean).length;
+                totalProgress += progress;
+            });
+            
+            const avgProgress = Math.round((totalProgress / (total * 6)) * 100);
+            const topType = Object.entries(types).sort((a, b) => b[1] - a[1])[0];
+            
+            document.getElementById('statsBar').textContent = `${total}个人物 · ${topType[1]}个${topType[0]} · 平均完成度${avgProgress}%`;
+        }
+        
+        function toggleMenu() {
+            document.getElementById('menuDropdown').classList.toggle('active');
+        }
+        
+        function closeMenu() {
+            document.getElementById('menuDropdown').classList.remove('active');
+        }
+        
+        function exportData() {
+            closeMenu();
+            const data = {
+                characters,
+                recentTags,
+                exportTime: new Date().toISOString(),
+                version: '1.0'
+            };
+            const blob = new Blob([JSON.stringify(data, null, 2)], { type: 'application/json' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = `人物画像_${new Date().toLocaleDateString('zh-CN').replace(/\//g, '-')}.json`;
+            a.click();
+            URL.revokeObjectURL(url);
+            showToast('已导出数据');
+        }
+        
+        function importData(e) {
+            closeMenu();
+            const file = e.target.files[0];
+            if (!file) return;
+            
+            const reader = new FileReader();
+            reader.onload = (event) => {
+                try {
+                    const data = JSON.parse(event.target.result);
+                    if (!data.characters || !Array.isArray(data.characters)) {
+                        showToast('文件格式错误');
+                        return;
+                    }
+                    
+                    const msg = `导入${data.characters.length}个人物，将覆盖现有数据，确定吗？`;
+                    document.getElementById('confirmMessage').textContent = msg;
+                    document.getElementById('confirmDialog').classList.add('active');
+                    confirmCallback = () => {
+                        characters = data.characters;
+                        recentTags = data.recentTags || [];
+                        localStorage.setItem('characters', JSON.stringify(characters));
+                        localStorage.setItem('recentTags', JSON.stringify(recentTags));
+                        renderFilterTags();
+                        renderGrid();
+                        showToast('导入成功');
+                    };
+                } catch (err) {
+                    showToast('文件解析失败');
+                }
+            };
+            reader.readAsText(file);
+            e.target.value = '';
+        }
+        
+        function openLargeEditor(title, content, callback) {
+            largeEditorCallback = callback;
+            document.getElementById('largeEditorTitle').textContent = title;
+            document.getElementById('largeTextarea').value = content || '';
+            document.getElementById('largeEditor').classList.add('active');
+        }
+        
+        function closeLargeEditor() {
+            document.getElementById('largeEditor').classList.remove('active');
+            largeEditorCallback = null;
+        }
+        
+        function saveLargeEditor() {
+            const content = document.getElementById('largeTextarea').value;
+            if (largeEditorCallback) largeEditorCallback(content);
+            closeLargeEditor();
+        }
+        
+        function renderFilterTags() {
+            const types = [...new Set(characters.map(c => c.relationship))];
+            const html = `
+                <div class="filter-tag ${currentFilter === 'all' ? 'active' : ''}" onclick="setFilter('all')">全部</div>
+                ${types.map(type => `
+                    <div class="filter-tag ${currentFilter === type ? 'active' : ''}" onclick="setFilter('${type}')">${type}</div>
+                `).join('')}
+            `;
+            document.getElementById('filterTags').innerHTML = html;
+        }
+        
+        function setFilter(filter) {
+            currentFilter = filter;
+            renderFilterTags();
+            renderGrid();
+        }
+        
+        function renderGrid() {
+            let list = characters;
+            if (currentFilter !== 'all') list = list.filter(c => c.relationship === currentFilter);
+            if (searchQuery) list = list.filter(c => 
+                c.name.toLowerCase().includes(searchQuery) ||
+                c.relationship.toLowerCase().includes(searchQuery) ||
+                (c.tags && c.tags.toLowerCase().includes(searchQuery))
+            );
+            
+            list.sort((a, b) => (b.updatedAt || b.createdAt) - (a.updatedAt || a.createdAt));
+            
+            const container = document.getElementById('characterGrid');
+            if (list.length === 0) {
+                container.innerHTML = '<div class="empty-state">还没有人物画像<br>点击右下角"+"开始记录</div>';
+                return;
+            }
+            
+            container.innerHTML = list.map(c => {
+                const info = [];
+                if (c.meetPlace) info.push(c.meetPlace);
+                if (c.meetTime) info.push(c.meetTime);
+                if (c.background) info.push(c.background.slice(0, 25) + (c.background.length > 25 ? '...' : ''));
+                const preview = info.join(' · ') || '暂无基本信息';
+                
+                const progress = [c.personality, c.events, c.values, c.exchange, c.strategy, c.notes].filter(Boolean).length;
+                const tags = c.tags ? c.tags.split('，').filter(Boolean) : [];
+                const photo = c.photo ? `<img src="${c.photo}" class="card-photo">` : '';
+                
+                return `
+                    <div class="character-card" onclick="openPreview('${c.id}')"><div class="card-header" style="display: flex; align-items: center;">
+                            ${photo}
+                            <div style="flex: 1;"><h3>${c.name}</h3></div></div><div class="card-meta"><span class="meta-tag">${c.relationship}</span>
+                            ${tags.map(t => `<span class="meta-tag">${t.trim()}</span>`).join('')}
+                        </div><div class="card-preview ${info.length === 0 ? 'empty' : ''}">${preview}</div><div class="card-footer"><div class="card-time">${formatTime(c.updatedAt || c.createdAt)}</div><div class="card-progress">
+                                ${[0,1,2,3,4,5].map(i => `<div class="progress-dot ${i < progress ? 'filled' : ''}"></div>`).join('')}
+                            </div></div></div>
+                `;
+            }).join('');
+        }
+        
+        function formatTime(ts) {
+            const diff = Date.now() - ts;
+            const m = Math.floor(diff / 60000);
+            const h = Math.floor(diff / 3600000);
+            const d = Math.floor(diff / 86400000);
+            if (m < 1) return '刚刚';
+            if (m < 60) return `${m}分钟前`;
+            if (h < 24) return `${h}小时前`;
+            if (d < 7) return `${d}天前`;
+            return new Date(ts).toLocaleDateString('zh-CN', { month: 'short', day: 'numeric' });
+        }
+        
+        function openPreview(id) {
+            currentCharacterId = id;
+            const c = characters.find(x => x.id === id);
+            if (!c) return;
+            
+            const photoHtml = c.photo ? `<img src="${c.photo}" style="width: 80px; height: 80px; border-radius: 50%; object-fit: cover; margin-bottom: 12px; border: 3px solid white; box-shadow: 0 2px 8px rgba(0,0,0,0.1);">` : '';
+            
+            document.getElementById('previewTitle').textContent = c.name;
+            document.getElementById('previewBody').innerHTML = `
+                ${photoHtml}
+                <div class="preview-section"><div class="preview-section-title">基本信息</div><div class="basic-info-grid"><div class="info-item"><span class="info-label">关系类型</span><span class="info-value">${c.relationship}</span></div><div class="info-item"><span class="info-label">认识地点</span><span class="info-value ${c.meetPlace ? '' : 'empty'}">${c.meetPlace || '未填写'}</span></div><div class="info-item"><span class="info-label">认识时间</span><span class="info-value ${c.meetTime ? '' : 'empty'}">${c.meetTime || '未填写'}</span></div><div class="info-item"><span class="info-label">背景信息</span><span class="info-value ${c.background ? '' : 'empty'}">${c.background || '未填写'}</span></div><div class="info-item"><span class="info-label">标签</span><span class="info-value ${c.tags ? '' : 'empty'}">${c.tags || '无'}</span></div></div></div><div class="preview-section"><div class="preview-section-title">性格特征</div><div class="preview-section-content ${c.personality ? '' : 'empty'}">${c.personality || '暂无内容'}</div></div><div class="preview-section"><div class="preview-section-title">核心事件</div><div class="preview-section-content ${c.events ? '' : 'empty'}">${c.events || '暂无内容'}</div></div><div class="preview-section"><div class="preview-section-title">三观分析</div><div class="preview-section-content ${c.values ? '' : 'empty'}">${c.values || '暂无内容'}</div></div><div class="preview-section"><div class="preview-section-title">价值交换</div><div class="preview-section-content ${c.exchange ? '' : 'empty'}">${c.exchange || '暂无内容'}</div></div><div class="preview-section"><div class="preview-section-title">维护策略</div><div class="preview-section-content ${c.strategy ? '' : 'empty'}">${c.strategy || '暂无内容'}</div></div><div class="preview-section"><div class="preview-section-title">备注</div><div class="preview-section-content ${c.notes ? '' : 'empty'}">${c.notes || '暂无内容'}</div></div>
+            `;
+            
+            document.getElementById('previewModal').classList.add('active');
+        }
+        
+        function closePreview() {
+            document.getElementById('previewModal').classList.remove('active');
+            currentCharacterId = null;
+        }
+        
+        function openAddModal() {
+            currentCharacterId = null;
+            openEditModal(null);
+        }
+        
+        function openEditModal(id) {
+            currentCharacterId = id;
+            const c = id ? characters.find(x => x.id === id) : {};
+            const isNew = !id;
+            
+            document.getElementById('editTitle').textContent = isNew ? '添加人物' : c.name;
+            document.getElementById('editBody').innerHTML = `
+                <div class="photo-section"><label class="form-label">照片</label><div class="photo-preview ${c.photo ? 'has-photo' : 'empty'}" id="photoPreview" onclick="selectPhoto()">
+                        ${c.photo ? `<img src="${c.photo}"><div class="photo-remove" onclick="event.stopPropagation(); removePhoto()">×</div>` : '📷'}
+                    </div><input type="file" id="photoInput" accept="image/*" style="display:none" onchange="handlePhotoSelect(event)"></div><div class="form-group"><label class="form-label">姓名</label><input type="text" class="form-input" id="inputName" value="${c.name || ''}" ${isNew ? 'autofocus' : ''}></div><div class="form-group"><label class="form-label">关系类型</label><div class="recent-tags" id="recentTags"></div><input type="text" class="form-input" id="inputRelation" value="${c.relationship || ''}"></div><div class="form-group"><label class="form-label">认识地点</label><input type="text" class="form-input" id="inputMeetPlace" value="${c.meetPlace || ''}"></div><div class="form-group"><label class="form-label">认识时间</label><input type="text" class="form-input" id="inputMeetTime" value="${c.meetTime || ''}"></div><div class="form-group"><label class="form-label">背景信息</label><div class="textarea-wrapper"><textarea class="form-textarea" id="inputBackground">${c.background || ''}</textarea><div class="expand-icon" onclick="expandField('背景信息', 'inputBackground')">⤢</div></div></div><div class="form-group"><label class="form-label">标签</label><input type="text" class="form-input" id="inputTags" value="${c.tags || ''}"></div><div class="form-group"><label class="form-label">性格特征</label><div class="textarea-wrapper"><textarea class="form-textarea" id="inputPersonality">${c.personality || ''}</textarea><div class="expand-icon" onclick="expandField('性格特征', 'inputPersonality')">⤢</div></div></div><div class="form-group"><label class="form-label">核心事件</label><div class="textarea-wrapper"><textarea class="form-textarea" id="inputEvents">${c.events || ''}</textarea><div class="expand-icon" onclick="expandField('核心事件', 'inputEvents')">⤢</div></div></div><div class="form-group"><label class="form-label">三观分析</label><div class="textarea-wrapper"><textarea class="form-textarea" id="inputValues">${c.values || ''}</textarea><div class="expand-icon" onclick="expandField('三观分析', 'inputValues')">⤢</div></div></div><div class="form-group"><label class="form-label">价值交换</label><div class="textarea-wrapper"><textarea class="form-textarea" id="inputExchange">${c.exchange || ''}</textarea><div class="expand-icon" onclick="expandField('价值交换', 'inputExchange')">⤢</div></div></div><div class="form-group"><label class="form-label">维护策略</label><div class="textarea-wrapper"><textarea class="form-textarea" id="inputStrategy">${c.strategy || ''}</textarea><div class="expand-icon" onclick="expandField('维护策略', 'inputStrategy')">⤢</div></div></div><div class="form-group"><label class="form-label">备注</label><div class="textarea-wrapper"><textarea class="form-textarea" id="inputNotes">${c.notes || ''}</textarea><div class="expand-icon" onclick="expandField('备注', 'inputNotes')">⤢</div></div></div>
+                ${isNew ? '' : `<button class="btn-delete" onclick="confirmDelete('${id}', false)">删除此人物</button>`}
+            `;
+            
+            renderRecentTags();
+            document.getElementById('editModal').classList.add('active');
+        }
+        
+        function selectPhoto() {
+            document.getElementById('photoInput').click();
+        }
+        
+        function handlePhotoSelect(e) {
+            const file = e.target.files[0];
+            if (!file) return;
+            
+            if (file.size > 2 * 1024 * 1024) {
+                showToast('照片大小不能超过2MB');
+                return;
+            }
+            
+            const reader = new FileReader();
+            reader.onload = (event) => {
+                const img = new Image();
+                img.onload = () => {
+                    const canvas = document.createElement('canvas');
+                    const maxSize = 400;
+                    let width = img.width;
+                    let height = img.height;
+                    
+                    if (width > height && width > maxSize) {
+                        height = (height * maxSize) / width;
+                        width = maxSize;
+                    } else if (height > maxSize) {
+                        width = (width * maxSize) / height;
+                        height = maxSize;
+                    }
+                    
+                    canvas.width = width;
+                    canvas.height = height;
+                    const ctx = canvas.getContext('2d');
+                    ctx.drawImage(img, 0, 0, width, height);
+                    
+                    const photo = canvas.toDataURL('image/jpeg', 0.8);
+                    const preview = document.getElementById('photoPreview');
+                    preview.innerHTML = `<img src="${photo}"><div class="photo-remove" onclick="event.stopPropagation(); removePhoto()">×</div>`;
+                    preview.classList.remove('empty');
+                    preview.classList.add('has-photo');
+                };
+                img.src = event.target.result;
+            };
+            reader.readAsDataURL(file);
+        }
+        
+        function removePhoto() {
+            const preview = document.getElementById('photoPreview');
+            preview.innerHTML = '📷';
+            preview.classList.add('empty');
+            preview.classList.remove('has-photo');
+            showToast('已删除照片');
+        }
+        
+        function expandField(title, fieldId) {
+            const el = document.getElementById(fieldId);
+            const content = el.value;
+            openLargeEditor(title, content, (newContent) => {
+                el.value = newContent;
+            });
+        }
+        
+        function renderRecentTags() {
+            const container = document.getElementById('recentTags');
+            if (!container) return;
+            container.innerHTML = recentTags.map(tag => `
+                <div class="recent-tag" onclick="selectTag('${tag}')">
+                    ${tag}
+                    <span class="tag-remove" onclick="event.stopPropagation(); removeTag('${tag}')">×</span></div>
+            `).join('');
+        }
+        
+        function selectTag(tag) {
+            document.getElementById('inputRelation').value = tag;
+        }
+        
+        function removeTag(tag) {
+            recentTags = recentTags.filter(t => t !== tag);
+            localStorage.setItem('recentTags', JSON.stringify(recentTags));
+            renderRecentTags();
+        }
+        
+        function closeEdit() {
+            document.getElementById('editModal').classList.remove('active');
+            currentCharacterId = null;
+        }
+        
+        function saveEdit() {
+            const name = document.getElementById('inputName').value.trim();
+            const relation = document.getElementById('inputRelation').value.trim();
+            
+            if (!name || !relation) {
+                showToast('请填写姓名和关系类型');
+                return;
+            }
+            
+            if (!recentTags.includes(relation)) {
+                recentTags.unshift(relation);
+                if (recentTags.length > 10) recentTags = recentTags.slice(0, 10);
+                localStorage.setItem('recentTags', JSON.stringify(recentTags));
+            }
+            
+            const photoEl = document.getElementById('photoPreview').querySelector('img');
+            const photo = photoEl ? photoEl.src : '';
+            
+            const data = {
+                name,
+                relationship: relation,
+                photo,
+                meetPlace: document.getElementById('inputMeetPlace')?.value.trim() || '',
+                meetTime: document.getElementById('inputMeetTime')?.value.trim() || '',
+                background: document.getElementById('inputBackground')?.value.trim() || '',
+                tags: document.getElementById('inputTags')?.value.trim() || '',
+                personality: document.getElementById('inputPersonality')?.value.trim() || '',
+                events: document.getElementById('inputEvents')?.value.trim() || '',
+                values: document.getElementById('inputValues')?.value.trim() || '',
+                exchange: document.getElementById('inputExchange')?.value.trim() || '',
+                strategy: document.getElementById('inputStrategy')?.value.trim() || '',
+                notes: document.getElementById('inputNotes')?.value.trim() || ''
+            };
+            
+            let savedId;
+            if (currentCharacterId) {
+                const c = characters.find(x => x.id === currentCharacterId);
+                Object.assign(c, data, { updatedAt: Date.now() });
+                savedId = currentCharacterId;
+                showToast('已保存');
+            } else {
+                savedId = Date.now().toString();
+                characters.push({ ...data, id: savedId, createdAt: Date.now(), updatedAt: Date.now() });
+                showToast('已创建');
+            }
+            
+            localStorage.setItem('characters', JSON.stringify(characters));
+            closeEdit();
+            renderFilterTags();
+            renderGrid();
+            
+            // 保存后打开预览
+            setTimeout(() => openPreview(savedId), 100);
+        }
+        
+        function confirmDelete(id, fromPreview) {
+            currentCharacterId = id;
+            const c = characters.find(x => x.id === id);
+            document.getElementById('confirmMessage').textContent = `确定要删除"${c.name}"吗？此操作不可恢复。`;
+            document.getElementById('confirmDialog').classList.add('active');
+            confirmCallback = () => {
+                characters = characters.filter(x => x.id !== id);
+                localStorage.setItem('characters', JSON.stringify(characters));
+                if (fromPreview) {
+                    closePreview();
+                } else {
+                    closeEdit();
+                }
+                renderFilterTags();
+                renderGrid();
+                showToast('已删除');
+            };
+        }
+        
+        function closeConfirm() {
+            document.getElementById('confirmDialog').classList.remove('active');
+            confirmCallback = null;
+        }
+        
+        function showToast(msg) {
+            const toast = document.getElementById('toast');
+            toast.textContent = msg;
+            toast.classList.add('show');
+            setTimeout(() => toast.classList.remove('show'), 2000);
+        }
+    </script></body></html>
